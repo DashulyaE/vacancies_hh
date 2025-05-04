@@ -32,24 +32,17 @@ class HeadHunterAPI(BaseApi):
             return response
 
 
-    def get_vacancies(self, keyword, per_page = 20):
+    def get_vacancies(self, keyword, per_page = 100):
         """Метод получения вакансий по ключевому слову"""
 
         self._connect()
         params = {"text": keyword, "per_page": per_page}
-        response = requests.get(self.__url, params=params)
-        if response.status_code != 200:
-            print('Ошибка при обращении к API:', response.status_code)
-        else:
-            vacancies = response.json().get("items", [])
-            return [
-                {
-                    'name': vacancy['name'],
-                    'area': vacancy['area']['name'],
-                    'url': vacancy['alternate_url'],
-                    'salary': vacancy.get('salary'),
-                    'id': vacancy.get('id')
-                }
-                for vacancy in vacancies
-            ]
+        try:
+            response = requests.get(self.__url, params=params)
+            response.raise_for_status()
+            return response.json().get("items", [])
+        except Exception as e:
+            print(f"Произошла ошибка: {e}")
+            return []
+
 

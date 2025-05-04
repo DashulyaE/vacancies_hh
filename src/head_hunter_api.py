@@ -41,5 +41,15 @@ class HeadHunterAPI(BaseApi):
         if response.status_code != 200:
             print('Ошибка при обращении к API:', response.status_code)
         else:
-            return response.json().get("items", [])
+            vacancies = response.json().get("items", [])
+            return [
+                {
+                    'name': vacancy['name'],
+                    'area': vacancy['area']['name'],
+                    'url': vacancy['alternate_url'],
+                    'salary': vacancy.get('salary'),
+                    'id': vacancy.get('id')
+                }
+                for vacancy in vacancies
+            ]
 

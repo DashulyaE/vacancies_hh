@@ -20,29 +20,32 @@ class HeadHunterAPI(BaseApi):
 
     def __init__(self):
         self.__url = "https://api.hh.ru/vacancies"
+        self.__params = {"text": '', "per_page": 100}
+        self.__vacancies = []
 
 
-    def _connect(self):
+    def _connect(self, keyword, per_page):
         """Метод подключения к API"""
 
-        response = requests.get(self.__url)
-        if response.status_code != 200:
-            print('Ошибка при обращении к API:', response.status_code)
-        else:
-            return response
+        self.__params["text"] = keyword
+        self.__params["per_page"] = per_page
+        try:
+            response = requests.get(self.__url, params=self.__params)
+            if response.status_code == 200:
+                return response
+            else:
+                raise Exception(f'Ошибка при обращении к API:, {response.status_code}')
+        except Exception as e:
+            print("Возникла ошибка при обращении к API ")
 
 
-    def get_vacancies(self, keyword, per_page = 100):
+    def get_vacancies(self, keyword, per_page=100):
         """Метод получения вакансий по ключевому слову"""
 
-        self._connect()
-        params = {"text": keyword, "per_page": per_page}
-        try:
-            response = requests.get(self.__url, params=params)
-            response.raise_for_status()
-            return response.json().get("items", [])
-        except Exception as e:
-            print(f"Произошла ошибка: {e}")
-            return []
-
+        vacancies_list = []
+        response = self._connect(keyword, per_page)
+        if response:
+            vacancies = response.json().get("items", [])
+            vacancies_list.append(vacancies)
+        return vacancies_list
 

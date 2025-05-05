@@ -17,3 +17,4 @@ class JSONSaver():
     #
     #     with open(self.__filename, "w", encoding="utf-8") as file:
     #         json.dump(old_vacancies, file, indent=4, ensure_ascii=False)
+        pass

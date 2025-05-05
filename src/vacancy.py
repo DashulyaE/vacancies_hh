@@ -3,70 +3,58 @@
 class Vacancy:
     """Класс для работы с вакансией"""
 
-    __slots__ = ("id", "name", "alternate_url", 'salary', "name_area", "snippet")
+    __slots__ = ("id", "name", "alternate_url", 'salary_from', 'salary_to', "name_area", "snippet")
 
-    def __init__(self, id, name, alternate_url, salary, name_area, snippet):
+    def __init__(self, id, name, alternate_url, salary_from, salary_to, name_area, snippet):
         self.id = id
-        self.name = self.__validate_name(name)
-        self.alternate_url = self.__validate_url(alternate_url)
-        self.salary = self.__validate_salary(salary)
-        self.name_area = name_area
-        self.snippet = snippet or 'Описание вакансии не указано'
+        self.name = self._validate_name(name)
+        self.alternate_url = self._validate_url(alternate_url)
+        self.salary_from = salary_from if salary_from is not None else 0
+        self.salary_to = salary_to if salary_to is not None else salary_from
+        self.name_area = name_area or 'Регион не указан'
+        self.snippet = snippet or 'Описания нет'
 
-    def __validate_name(self,name):
-        """Метод валидации названия вакансии"""
-
-        if not isinstance(name, str) or not name:
-            return "Название вакансии не указано"
+    def _validate_name(self, name):
+        """Проверяет, что название вакансии является строкой."""
+        if not isinstance(name, str):
+            raise ValueError("Название вакансии должно быть строкой.")
         return name
 
-    def __validate_url(self, alternate_url):
-        """Метод валидации ссылки на вакансию """
-
+    def _validate_url(self, alternate_url):
+        """Проверяет, что ссылка на вакансию является
+        строкой и начинается с "http"."""
         if not isinstance(alternate_url, str) or not alternate_url.startswith("http"):
-            return "Cсылка на вакансию должна быть строкой и начинаться с http"
+            raise ValueError(
+                "Ссылка на вакансию должна быть " 'строкой и начинаться с "http".'
+            )
         return alternate_url
 
-    def __validate_salary(self, salary):
-        """Метод валидации зарплаты"""
+    def __lt__(self, other: "Vacancy"):
+        """Метод, сравнивающий вакансии по минимальной ЗП"""
+        return (self.salary_from + self.salary_to) / 2 < (other.salary_from + other.salary_to) / 2
 
-        if not isinstance(salary, (int, float)) or salary < 0:
-            return 0
-        return salary
-
-    def __lt__(self, other):
-        if not isinstance(other, Vacancy):
-            return NotImplemented
-        return self.salary < other.salary
-
-    def __le__(self, other):
-        if not isinstance(other, Vacancy):
-            return NotImplemented
-        return self.salary <= other.salary
+    def __gt__(self, other: "Vacancy"):
+        """Метод, сравнивающий вакансии по максимальной ЗП"""
+        return (self.salary_from + self.salary_to) / 2 > (other.salary_from + other.salary_to) / 2
 
     def __eq__(self, other):
-        if not isinstance(other, Vacancy):
-            return NotImplemented
-        return self.salary == other.salary
+        """Магический метод, возвращающий True, если зарплата
+        текущей вакансии равна зарплате другой вакансии."""
+        return (self.salary_from + self.salary_to) / 2 == (other.salary_from + other.salary_to) / 2
 
-    def __ne__(self, other):
-        if not isinstance(other, Vacancy):
-            return NotImplemented
-        return self.salary != other.salary
-
-    def __gt__(self, other):
-        if not isinstance(other, Vacancy):
-            return NotImplemented
-        return self.salary > other.salary
+    def __le__(self, other):
+        """Магический метод, возвращающий True, если зарплата
+        текущей вакансии меньше или равна зарплате другой вакансии."""
+        return (self.salary_from + self.salary_to) / 2 <= (other.salary_from + other.salary_to) / 2
 
     def __ge__(self, other):
-        if not isinstance(other, Vacancy):
-            return NotImplemented
-        return self.salary >= other.salary
+        """Магический метод, возвращающий True, если зарплата
+        текущей вакансии больше или равна зарплате другой вакансии."""
+        return (self.salary_from + self.salary_to) / 2 >= (other.salary_from + other.salary_to) / 2
 
-    def __str__(self) -> str:
+    def __str__(self):
         """Метод строкового отображения вакансии"""
-        return (f'ID: {self.id}, Вакансия: {self.name}, зарплата: {self.salary}, '
+        return (f'ID: {self.id}, Вакансия: {self.name}, зарплата: от {self.salary_from} до {self.salary_to}, '
                 f'URL-адрес: {self.alternate_url}, регион: {self.name_area}, описание: {self.snippet}')
 
 
@@ -80,6 +68,3 @@ class Vacancy:
             "description": self.name_area,
             "snippet": self.snippet
         }
-
-
-

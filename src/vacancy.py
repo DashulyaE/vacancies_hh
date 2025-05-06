@@ -1,9 +1,7 @@
-
-
 class Vacancy:
     """Класс для работы с вакансией"""
 
-    __slots__ = ("id", "name", "alternate_url", 'salary_from', 'salary_to', "name_area", "snippet")
+    __slots__ = ("id", "name", "alternate_url", "salary_from", "salary_to", "name_area", "snippet")
 
     def __init__(self, id, name, alternate_url, salary_from, salary_to, name_area, snippet):
         self.id = id
@@ -11,8 +9,8 @@ class Vacancy:
         self.alternate_url = self._validate_url(alternate_url)
         self.salary_from = salary_from if salary_from is not None else 0
         self.salary_to = salary_to if salary_to is not None else salary_from
-        self.name_area = name_area or 'Регион не указан'
-        self.snippet = snippet or 'Описания нет'
+        self.name_area = name_area or "Регион не указан"
+        self.snippet = snippet or "Описания нет"
 
     def _validate_name(self, name):
         """Проверяет, что название вакансии является строкой."""
@@ -24,9 +22,7 @@ class Vacancy:
         """Проверяет, что ссылка на вакансию является
         строкой и начинается с "http"."""
         if not isinstance(alternate_url, str) or not alternate_url.startswith("http"):
-            raise ValueError(
-                "Ссылка на вакансию должна быть " 'строкой и начинаться с "http".'
-            )
+            raise ValueError("Ссылка на вакансию должна быть " 'строкой и начинаться с "http".')
         return alternate_url
 
     def __lt__(self, other: "Vacancy"):
@@ -54,9 +50,10 @@ class Vacancy:
 
     def __str__(self):
         """Метод строкового отображения вакансии"""
-        return (f'ID: {self.id}, Вакансия: {self.name}, зарплата: от {self.salary_from} до {self.salary_to}, '
-                f'URL-адрес: {self.alternate_url}, регион: {self.name_area}, описание: {self.snippet}')
-
+        return (
+            f"ID: {self.id}, Вакансия: {self.name}, зарплата: от {self.salary_from} до {self.salary_to}, "
+            f"URL-адрес: {self.alternate_url}, регион: {self.name_area}, описание: {self.snippet}"
+        )
 
     def to_dict(self):
         """Метод, преобразующий объект класса в словарь"""
@@ -66,5 +63,5 @@ class Vacancy:
             "url": self.alternate_url,
             "salary": self.salary,
             "description": self.name_area,
-            "snippet": self.snippet
+            "snippet": self.snippet,
         }

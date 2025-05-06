@@ -1,4 +1,4 @@
-class JSONSaver():
+class JSONSaver:
     # def json_save(self, list_object):
     #     """Записывает информацию в файл с фильтром на дубликаты"""
     #     old_vacancies = self.json_give()
@@ -17,4 +17,4 @@ class JSONSaver():
     #
     #     with open(self.__filename, "w", encoding="utf-8") as file:
     #         json.dump(old_vacancies, file, indent=4, ensure_ascii=False)
-        pass
+    pass

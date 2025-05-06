@@ -1,30 +1,29 @@
 import json
 from abc import ABC, abstractmethod
-import os
 from pathlib import Path
-from src.vacancy import Vacancy
+
 
 class BaseSaver(ABC):
     """Абстрактынй класс для работы с файлами"""
 
     @abstractmethod
     def load_vacancy(self):
+        """Абстрактный метод загрузки данных из JSON-файла."""
         pass
 
     @abstractmethod
     def _save_vacancy(self):
+        """Абстрактный метод сохранения данных в файл."""
         pass
 
     @abstractmethod
     def add_vacancy(self):
-        pass
-
-    @abstractmethod
-    def get_vacancies(self):
+        """Абстрактный метод добавления новых вакансий в файл и его сохранение"""
         pass
 
     @abstractmethod
     def delete_vacancy(self):
+        """Абстрактный метод для удаления вакансий из файла"""
         pass
 
 
@@ -37,7 +36,7 @@ class JSONSaver(BaseSaver):
             self._load_vacancy([])
 
     def load_vacancy(self):
-        """Приватный метод загрузки данных из JSON-файла."""
+        """Метод загрузки данных из JSON-файла."""
         try:
             with open(self.__path, "r", encoding="utf-8") as file:
                 content = file.read().strip()
@@ -58,13 +57,21 @@ class JSONSaver(BaseSaver):
 
     def add_vacancy(self, vacancies):
         """Метод добавления новых вакансий в JSON файл и его сохранение"""
+
         data_ = self.load_vacancy()
         data_.append(vacancies)
         self._save_vacancy(data_)
 
+    def delete_vacancy(self, id_vacancies):
+        """Абстрактный метод для удаления вакансий из файла"""
 
-    def get_vacancies(self):
-        pass
+        data = self.load_vacancy()
+        data_len_start = len(data)
+        data = [vacancy for vacancy in data if vacancy.get("id") != id_vacancies]
+        data_len_end = len(data)
+        if data_len_start == data_len_end:
+            print("Вакансия не найдена")
+        else:
+            print("Вакансия удалена")
 
-    def delete_vacancy(self):
-        pass
+        self._save_vacancy(data)

@@ -73,5 +73,5 @@ class Vacancy:
             "salary_from": self.salary_from,
             "salary_to": self.salary_to,
             "name_area": self.name_area,
-            "snippet": self.snippet
+            "snippet": self.snippet,
         }

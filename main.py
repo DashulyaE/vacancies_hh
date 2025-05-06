@@ -3,14 +3,13 @@ import os
 from config import DATA_DIR
 from src.filehandler import JSONSaver
 from src.head_hunter_api import HeadHunterAPI
-from src.utils import sorted_vacancies, find_vacancies
-from src.vacancy import Vacancy
+from src.utils import sorted_vacancies, find_vacancies, vacancies_to_obj
 
 
-def user_interaction():
+def user_interaction(): # pragma: no cover
 
     hh_api = HeadHunterAPI()
-    name_file = 'vacancies.json'
+    name_file = "vacancies.json"
     operations_path = os.path.join(DATA_DIR, name_file)
     json_obj = JSONSaver(operations_path)
     keyword = input("Введите ключевое слово для запроса на hh.ru: ")
@@ -29,26 +28,27 @@ def user_interaction():
                 json_obj.add_vacancy(vacancy_filter)
 
         # вывод объектов класса Вакансии
-    #     if vacancies_filter != []:
-    #         for vacancy in vacancies_filter:
-    #             salary_from = vacancy.get("salary", {}).get("from", 0) if vacancy.get("salary") else 0
-    #             salary_to = vacancy.get("salary", {}).get("to", 0) if vacancy.get("salary") else 0
-    #             vacancy = Vacancy(
-    #                 vacancy.get("id"),
-    #                 vacancy.get("name"),
-    #                 vacancy.get("alternate_url"),
-    #                 salary_from,
-    #                 salary_to,
-    #                 vacancy.get("area").get("name"),
-    #                 vacancy.get("snippet"),
-    #             )
-    #             print(vacancy)
-    #     else:
-    #         print("Вакансий с указанными критериями не найдено")
-    # else:
-    #     print("Кол-во вакансий должно быть числом")
+        if vacancies_filter != []:
+            vacancies_to_obj(vacancies_filter)
+        else:
+            print("Вакансий с указанными критериями не найдено")
+    else:
+        print("Кол-во вакансий должно быть числом")
+    print("Прочитать содержимое файла с сохраненными вакансиями?")
+    answer_1 = str(input("Ответ (да/нет): ")).title()
+    if answer_1 in ["Да", "Yes"]:
+        read_file = json_obj.load_vacancy()
+        vacancies_to_obj(read_file)
+        print("Удалить вакансию по ID записи?")
+        answer_2 = str(input("Ответ (да/нет): ")).title()
+        if answer_2 in ["Да", "Yes"]:
+            print("Введите ID записи:")
+            answer_3 = str(input("Ответ: ")).title()
+            json_obj.delete_vacancy(answer_3)
+    else:
+        print("Работа программы завершена")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
 
     user_interaction()

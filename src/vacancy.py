@@ -3,7 +3,16 @@ class Vacancy:
 
     __slots__ = ("id", "name", "alternate_url", "salary_from", "salary_to", "name_area", "snippet")
 
-    def __init__(self, id, name, alternate_url, salary_from, salary_to, name_area, snippet):
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        alternate_url: str,
+        salary_from: float,
+        salary_to: float,
+        name_area: str,
+        snippet: str,
+    ):
         self.id = id
         self.name = self._validate_name(name)
         self.alternate_url = self._validate_url(alternate_url)
@@ -12,13 +21,13 @@ class Vacancy:
         self.name_area = name_area or "Регион не указан"
         self.snippet = snippet or "Описания нет"
 
-    def _validate_name(self, name):
+    def _validate_name(self, name: str):
         """Проверяет, что название вакансии является строкой."""
         if not isinstance(name, str):
             raise ValueError("Название вакансии должно быть строкой.")
         return name
 
-    def _validate_url(self, alternate_url):
+    def _validate_url(self, alternate_url: str):
         """Проверяет, что ссылка на вакансию является
         строкой и начинается с "http"."""
         if not isinstance(alternate_url, str) or not alternate_url.startswith("http"):
@@ -61,7 +70,8 @@ class Vacancy:
             "id": self.id,
             "name": self.name,
             "url": self.alternate_url,
-            "salary": self.salary,
-            "description": self.name_area,
-            "snippet": self.snippet,
+            "salary_from": self.salary_from,
+            "salary_to": self.salary_to,
+            "name_area": self.name_area,
+            "snippet": self.snippet
         }

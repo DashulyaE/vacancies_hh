@@ -1,3 +1,4 @@
+
 import requests
 from abc import ABC, abstractmethod
 
@@ -7,12 +8,12 @@ class BaseApi(ABC):
 
     @abstractmethod
     def _connect(self):
-        """Метод подключения к API"""
+        """Абстрактыный метод подключения к API"""
         pass
 
     @abstractmethod
     def get_vacancies(self):
-        """Метод получения вакансий по ключевому слову"""
+        """Абстрактыный метод получения вакансий по ключевому слову"""
         pass
 
 
@@ -24,7 +25,7 @@ class HeadHunterAPI(BaseApi):
         self.__params = {"text": "", "per_page": 100}
         self.__vacancies = []
 
-    def _connect(self, keyword, per_page):
+    def _connect(self, keyword: str, per_page: int):
         """Метод подключения к API"""
 
         self.__params["text"] = keyword
@@ -36,9 +37,9 @@ class HeadHunterAPI(BaseApi):
             else:
                 raise Exception(f"Ошибка при обращении к API:, {response.status_code}")
         except Exception as e:
-            print("Возникла ошибка при обращении к API ")
+            print(f"Возникла ошибка при обращении к API , {e}")
 
-    def get_vacancies(self, keyword, per_page=20):
+    def get_vacancies(self, keyword: str, per_page: int = 100):
         """Метод получения вакансий по ключевому слову"""
 
         vacancies_list = []

@@ -1,4 +1,7 @@
-def sorted_vacancies(vacancies, count):
+from typing import List
+
+
+def sorted_vacancies(vacancies: List[dict], count: int):
     sorted_vacancies = sorted(
         vacancies[0],
         key=lambda v: (
@@ -12,7 +15,7 @@ def sorted_vacancies(vacancies, count):
     return top_vacancies
 
 
-def find_vacancies(vacancies, keyword):
+def find_vacancies(vacancies: List[dict], keyword: str):
     """Возвращает список вакансий, содержащих ключевое слово."""
     result = []
     result = [

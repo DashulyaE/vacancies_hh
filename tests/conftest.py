@@ -24,3 +24,4 @@ def vacancy3():
 @pytest.fixture()
 def vacancy4():
     return Vacancy("120168111", "Backend", "https://hh.ru/vacancy/120168453", 10000000, 11000000, "Ташкент", "описание")
+

@@ -22,7 +22,6 @@ def user_interaction(): # pragma: no cover
         vacancies_top = sorted_vacancies(vacancies, top_n)
         vacancies_filter = find_vacancies(vacancies_top, filter_words)
         vacancies_load = json_obj.load_vacancy()
-
         for vacancy_filter in vacancies_filter:
             if vacancy_filter not in vacancies_load:
                 json_obj.add_vacancy(vacancy_filter)

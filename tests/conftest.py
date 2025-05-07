@@ -1,5 +1,6 @@
 import pytest
 
+from src import HeadHunterAPI
 from src.vacancy import Vacancy
 
 

@@ -31,7 +31,7 @@ class Vacancy:
         """Проверяет, что ссылка на вакансию является
         строкой и начинается с "http"."""
         if not isinstance(alternate_url, str) or not alternate_url.startswith("http"):
-            raise ValueError("Ссылка на вакансию должна быть " 'строкой и начинаться с "http".')
+            raise ValueError("Ссылка на вакансию должна быть строкой.")
         return alternate_url
 
     def __lt__(self, other: "Vacancy"):
@@ -42,17 +42,17 @@ class Vacancy:
         """Метод, сравнивающий вакансии по максимальной ЗП"""
         return (self.salary_from + self.salary_to) / 2 > (other.salary_from + other.salary_to) / 2
 
-    def __eq__(self, other):
+    def __eq__(self, other: "Vacancy"):
         """Магический метод, возвращающий True, если зарплата
         текущей вакансии равна зарплате другой вакансии."""
         return (self.salary_from + self.salary_to) / 2 == (other.salary_from + other.salary_to) / 2
 
-    def __le__(self, other):
+    def __le__(self, other:"Vacancy"):
         """Магический метод, возвращающий True, если зарплата
         текущей вакансии меньше или равна зарплате другой вакансии."""
         return (self.salary_from + self.salary_to) / 2 <= (other.salary_from + other.salary_to) / 2
 
-    def __ge__(self, other):
+    def __ge__(self, other:"Vacancy"):
         """Магический метод, возвращающий True, если зарплата
         текущей вакансии больше или равна зарплате другой вакансии."""
         return (self.salary_from + self.salary_to) / 2 >= (other.salary_from + other.salary_to) / 2

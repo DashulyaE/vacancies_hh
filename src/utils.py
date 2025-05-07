@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Any
 
 from src.vacancy import Vacancy
 
@@ -27,7 +27,8 @@ def find_vacancies(vacancies: List[dict], keyword: str):
     return result
 
 
-def vacancies_to_obj(vacancies_filter: List[dict]):
+def vacancies_to_obj(vacancies_filter: Any):
+    """Возвращает экземляр класса в определенной структуре"""
     for vacancy in vacancies_filter:
         salary_from = vacancy.get("salary", {}).get("from", 0) if vacancy.get("salary") else 0
         salary_to = vacancy.get("salary", {}).get("to", 0) if vacancy.get("salary") else 0

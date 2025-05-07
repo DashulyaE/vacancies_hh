@@ -44,6 +44,8 @@ def user_interaction(): # pragma: no cover
             print("Введите ID записи:")
             answer_3 = str(input("Ответ: ")).title()
             json_obj.delete_vacancy(answer_3)
+        else:
+            print("Работа программы завершена")
     else:
         print("Работа программы завершена")
 

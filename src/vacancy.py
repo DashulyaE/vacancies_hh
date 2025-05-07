@@ -47,12 +47,12 @@ class Vacancy:
         текущей вакансии равна зарплате другой вакансии."""
         return (self.salary_from + self.salary_to) / 2 == (other.salary_from + other.salary_to) / 2
 
-    def __le__(self, other:"Vacancy"):
+    def __le__(self, other: "Vacancy"):
         """Магический метод, возвращающий True, если зарплата
         текущей вакансии меньше или равна зарплате другой вакансии."""
         return (self.salary_from + self.salary_to) / 2 <= (other.salary_from + other.salary_to) / 2
 
-    def __ge__(self, other:"Vacancy"):
+    def __ge__(self, other: "Vacancy"):
         """Магический метод, возвращающий True, если зарплата
         текущей вакансии больше или равна зарплате другой вакансии."""
         return (self.salary_from + self.salary_to) / 2 >= (other.salary_from + other.salary_to) / 2

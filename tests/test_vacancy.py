@@ -34,9 +34,13 @@ def test_magic(vacancy, vacancy2, vacancy3, vacancy4):
     assert vacancy <= vacancy3
     assert vacancy3 == vacancy4
 
+
 def test_vacancy_str_method(capsys, vacancy):
     """Тест метода __str__ класса Vacancy с использованием capsys."""
     print(vacancy)  # Выводим объект в stdout
     captured = capsys.readouterr()  # Перехватываем вывод
-    expected_output = f"ID: 120168453, Вакансия: Backend-разработчик, зарплата: от 5000000 до 15000000, URL-адрес: https://hh.ru/vacancy/120168453, регион: Ташкент, описание: описание\n"
+    expected_output = (
+        f"ID: 120168453, Вакансия: Backend-разработчик, зарплата: от 5000000 до 15000000, "
+        f"URL-адрес: https://hh.ru/vacancy/120168453, регион: Ташкент, описание: описание\n"
+    )
     assert captured.out == expected_output

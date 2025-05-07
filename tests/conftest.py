@@ -1,6 +1,5 @@
 import pytest
 
-from src import HeadHunterAPI
 from src.vacancy import Vacancy
 
 
@@ -18,10 +17,13 @@ def vacancy2():
 
 @pytest.fixture()
 def vacancy3():
-    return Vacancy("120168000", "Backend", "https://hh.ru/vacancy/120168453", 10000000, 11000000, "Ташкент", "описание")
+    return Vacancy(
+        "120168000", "Backend", "https://hh.ru/vacancy/120168453", 10000000, 11000000, "Ташкент", "описание"
+    )
 
 
 @pytest.fixture()
 def vacancy4():
-    return Vacancy("120168111", "Backend", "https://hh.ru/vacancy/120168453", 10000000, 11000000, "Ташкент", "описание")
-
+    return Vacancy(
+        "120168111", "Backend", "https://hh.ru/vacancy/120168453", 10000000, 11000000, "Ташкент", "описание"
+    )

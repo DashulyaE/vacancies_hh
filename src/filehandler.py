@@ -8,7 +8,7 @@ class BaseSaver(ABC):
 
     @abstractmethod
     def load_vacancy(self):
-        """Абстрактный метод загрузки данных из JSON-файла."""
+        """Абстрактный метод загрузки данных из файла."""
         pass
 
     @abstractmethod
@@ -33,7 +33,7 @@ class JSONSaver(BaseSaver):
     def __init__(self, path: str = r"../data/vacancies.json"):
         self.__path = Path(path)
         if not self.__path.exists():
-            self._load_vacancy([])
+            self.load_vacancy([])
 
     def load_vacancy(self):
         """Метод загрузки данных из JSON-файла."""
@@ -63,7 +63,7 @@ class JSONSaver(BaseSaver):
         self._save_vacancy(data_)
 
     def delete_vacancy(self, id_vacancies):
-        """Абстрактный метод для удаления вакансий из файла"""
+        """Метод для удаления вакансий из файла"""
 
         data = self.load_vacancy()
         data_len_start = len(data)
